@@ -2,30 +2,43 @@ import React from "react";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
-function ListGroup() {
-  const [selected, setSelected] = React.useState(-1);
-  let items = [
-    "An item",
-    "A second item",
-    "A third item",
-    "A fourth item",
-    "And a fifth one",
-    "And a fifth one",
-  ];
+interface Props {
+  items: string[];
+  heading: string;
+  onPressItem: (item: string) => void;
+}
 
-  const handleClick = (event: React.MouseEvent) => {
-    console.log("clicked");
-    console.log(event);
+function ListGroup(
+  { items, heading, onPressItem }: Props = {
+    items: [],
+    heading: "This",
+    onPressItem: () => {},
+  }
+) {
+  //use state to keep track of the selected index
+  const [selectedIndex, setSelectedIndex] = React.useState(-1);
+
+  const handlePress = (index: number, item: string) => {
+    setSelectedIndex(index);
+    onPressItem && onPressItem(item);
   };
 
   return (
     <>
-      <h1>Hello</h1>
+      <h1>{heading}</h1>
       {items.length > 0 ? (
         <ul className="list-group">
-          {items.map((item) => {
+          {items.map((item, index) => {
             return (
-              <li key={item} className="list-group-item" onClick={handleClick}>
+              <li
+                key={item}
+                className={
+                  selectedIndex === index
+                    ? "list-group-item active"
+                    : "list-group-item"
+                }
+                onClick={() => handlePress(index, item)}
+              >
                 {item}
               </li>
             );

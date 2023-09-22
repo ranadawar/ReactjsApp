@@ -1,29 +1,22 @@
+import React from "react";
 import "./App.css";
-import ListGroup from "./components/ListGroup";
+import Alert from "./components/Alert";
+import Button from "./components/Button";
 
 function App() {
-  const items = [
-    "An item",
-    "A second item",
-    "A third item",
-    "A fourth item",
-    "And a fifth one",
-    "And a fifth one",
-    "And a fifth one",
-    "And a fifth one",
-  ];
+  const [isClicked, setIsClicked] = React.useState(false);
 
-  const handleSelection = (item: string) => {
-    console.log(item);
-  };
   return (
-    <>
-      <ListGroup
-        onPressItem={handleSelection}
-        heading="Learning Reactjs"
-        items={items}
-      />
-    </>
+    <div>
+      {isClicked && (
+        <Alert onPress={() => setIsClicked(false)}>
+          This is an alert remove it when you see it
+        </Alert>
+      )}
+      <Button color="primary" onPress={() => setIsClicked(true)}>
+        Click me
+      </Button>
+    </div>
   );
 }
 
